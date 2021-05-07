@@ -196,6 +196,17 @@ body {
   right: 5px;
   color: #BDBFC1;
 }
+.container .right .chat-main .text i {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  font-size: 14px;
+  color: #BDBFC1;
+  display: none;
+}
+.container .right .chat-main .text:hover i {
+  display: block;
+}
 .container .right .chat-main .text.sent {
   float: right;
   clear: both;
