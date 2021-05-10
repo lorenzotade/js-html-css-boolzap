@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' integrity='sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==' crossorigin='anonymous'/>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <title>js-html-css-boolzap</title>
+</head>
+<body>
+  
+  <!-- APP CONTAINER -->
+  <div id="app" class="container">
+
+    <!-- ASIDE LEFT -->
+    <aside class="left">
+
+      <!-- LEFT HEADER -->
+      <header>
+        <!-- user info self -->
+        <div class="user-info">
+          <img :src="'img/avatar' + user.avatar + '.jpg'" :alt="user.name">
+          <span class="contact-name">{{user.name}}</span>
+        </div> <!-- user info self -->
+
+        <div class="user-buttons">
+          <i class="fas fa-circle-notch"></i>
+          <i class="fas fa-comment-alt"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+
+      </header> <!-- /LEFT HEADER -->
+
+      <!-- NOTIFY -->
+      <section class="notify">
+
+        <i class="fas fa-bell-slash"></i>
+        <div class="activate-notification">
+          <span>Ricevi notifiche di nuovi messaggi</span>
+          <a href="#">Attiva notifiche desktop</a>
+        </div>
+
+      </section> <!-- /NOTIFY -->
+
+      <!-- SEARCH CHAT -->
+      <section class="search-chat">
+
+        <button><i class="fas fa-search"></i></button>
+        <input type="text" placeholder="Cerca o inizia una nuova chat">
+
+      </section><!-- /SEARCH CHAT -->
+
+      <!-- CHAT LIST CONTAINER -->
+      <section class="chat-list-container">
+        <!-- CHAT LIST -->
+        <div class="chat-list">
+
+          <ul>
+            <!-- list element -->
+            <li
+              v-for="(contact, index) in contacts"
+              @click="displayMessages(index)"
+            >
+              <img :src="getSrc(index)" :alt="contact.name">
+              <div class="msg-info">
+                <span>{{contact.name}}</span>
+                <span class="last-msg">{{contact.messages[contact.messages.length - 1].text}}</span>
+                <span class="last-date">{{contact.messages[contact.messages.length - 1].date}}</span>
+              </div>
+              
+            </li> <!-- /list element -->
+          </ul>
+
+        </div> <!-- /CHAT LIST -->
+
+      </section> <!-- /CHAT LIST CONTAINER -->
+
+    </aside> <!-- /ASIDE LEFT -->
+
+    <!-- MAIN RIGHT -->
+    <main class="right">
+      <!-- RIGHT HEADER -->
+      <header>
+        <!-- contact info chat-->
+        <div 
+          class="contact-info"
+          v-for="(contact, index) in contacts"
+          v-if="(contact.visible)"
+        >
+          <img :src="getSrc(index)" :alt="contact.name">
+          <div class="name-access">
+            <span class="contact-name">{{contact.name}}</span>
+            <span class="last-access">Ultimo accesso oggi alle {{contact.messages[contact.messages.length - 1].date}}</span>
+          </div>
+        </div>  <!-- /contact info chat-->
+
+        <div class="chat-buttons">
+          <i class="fas fa-search"></i>
+          <i class="fas fa-paperclip"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+
+      </header> <!-- /RIGHT HEADER -->
+
+      <!-- CHAT MAIN SECTION -->
+      <section class="chat-main">
+        <!-- text message -->
+        <template v-for="(contact, index) in contacts">
+          <div 
+            class="text"
+            v-if="contact.visible"
+            v-for="message in contact.messages"
+            :class="message.status"
+          >
+            <span>{{message.text}}</span>
+            <span class="text-info">{{message.date}}</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+        </template> <!-- /text message -->
+
+      </section> <!-- /CHAT MAIN SECTION -->
+
+      <!-- RIGHT FOOTER -->
+      <footer>
+        <!-- CHAT CONSOLE -->
+        <div class="chat-console">
+          <i class="far fa-smile"></i>
+          <input 
+            @keyup.enter="botMessage" 
+            v-model="msgSent" 
+            type="text" 
+            placeholder="Scrivi un messaggio">
+          <i class="fas fa-microphone"></i>
+        </div> <!-- /CHAT CONSOLE -->
+
+      </footer> <!-- /RIGHT FOOTER -->
+
+    </main> <!-- /MAIN RIGHT -->
+
+  </div> <!-- /APP CONTAINER -->
+
+
+  <!-- SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.4/dayjs.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
