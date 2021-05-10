@@ -63,6 +63,7 @@
             <!-- list element -->
             <li
               v-for="(contact, index) in contacts"
+              @click="displayMessages(index)"
             >
               <img :src="getSrc(index)" :alt="user.name">
               <span>{{contact.name}}</span>
@@ -80,10 +81,14 @@
       <!-- RIGHT HEADER -->
       <header>
         <!-- contact info chat-->
-        <div class="contact-info">
-          <img src="img/avatar_1.jpg" :alt="user.name">
+        <div 
+          class="contact-info"
+          v-for="(contact, index) in contacts"
+          v-if="(contact.visible)"
+        >
+          <img :src="'img/avatar' + contact.avatar + '.jpg'" :alt="contact.name">
           <div class="name-access">
-            <span class="contact-name">Michele</span>
+            <span class="contact-name">{{contact.name}}</span>
             <span class="last-access">Ultimo accesso oggi alle</span>
           </div>
         </div>  <!-- /contact info chat-->
@@ -98,24 +103,19 @@
 
       <!-- CHAT MAIN SECTION -->
       <section class="chat-main">
-
-        <div class="text sent">
-          <span>Hai portato a spasso il cane?</span>
-          <span class="text-info">10/01/2020 15:30:55</span>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-
-        <div class="text sent">
-          <span>Ricordati di dargli da mangiare</span>
-          <span class="text-info">10/01/2020 15:50:00</span>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-
-        <div class="text received">
-          <span>Tutto fatto!</span>
-          <span class="text-info">10/01/2020 16:15:22</span>
-          <i class="fas fa-chevron-down"></i>
-        </div>
+        <!-- text message -->
+        <template v-for="(contact, index) in contacts">
+          <div 
+            class="text"
+            v-if="contact.visible"
+            v-for="message in contact.messages"
+            :class="message.status"
+          >
+            <span>{{message.text}}</span>
+            <span class="text-info">{{message.date}}</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+        </template> <!-- /text message -->
 
       </section> <!-- /CHAT MAIN SECTION -->
 
@@ -136,6 +136,7 @@
 
 
   <!-- SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.4/dayjs.min.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>
