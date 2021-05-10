@@ -196,8 +196,8 @@ body {
 .container .right .chat-main .text {
   padding: 20px 10px;
   position: relative;
-  width: 40%;
-  max-width: 40%;
+  min-width: 40%;
+  max-width: 45%;
   margin-bottom: 10px;
   border-radius: 10px;
   font-size: 14px;

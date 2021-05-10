@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' integrity='sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==' crossorigin='anonymous'/>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <title>js-html-css-boolzap</title>
+</head>
+<body>
+  
+  <!-- APP CONTAINER -->
+  <div id="app" class="container">
+
+    <!-- ASIDE LEFT -->
+    <aside class="left">
+
+      <!-- LEFT HEADER -->
+      <header>
+        <!-- user info self -->
+        <div class="user-info">
+          <img :src="'img/avatar' + user.avatar + '.jpg'" :alt="user.name">
+          <span class="contact-name">{{user.name}}</span>
+        </div> <!-- user info self -->
+
+        <div class="user-buttons">
+          <i class="fas fa-circle-notch"></i>
+          <i class="fas fa-comment-alt"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+
+      </header> <!-- /LEFT HEADER -->
+
+      <!-- NOTIFY -->
+      <section class="notify">
+
+        <i class="fas fa-bell-slash"></i>
+        <div class="activate-notification">
+          <span>Ricevi notifiche di nuovi messaggi</span>
+          <a href="#">Attiva notifiche desktop</a>
+        </div>
+
+      </section> <!-- /NOTIFY -->
+
+      <!-- SEARCH CHAT -->
+      <section class="search-chat">
+
+        <button><i class="fas fa-search"></i></button>
+        <input type="text" placeholder="Cerca o inizia una nuova chat">
+
+      </section><!-- /SEARCH CHAT -->
+
+      <!-- CHAT LIST CONTAINER -->
+      <section class="chat-list-container">
+        <!-- CHAT LIST -->
+        <div class="chat-list">
+
+          <ul>
+            <!-- list element -->
+            <li
+              v-for="(contact, index) in contacts"
+            >
+              <img :src="getSrc(index)" :alt="user.name">
+              <span>{{contact.name}}</span>
+            </li> <!-- /list element -->
+          </ul>
+
+        </div> <!-- /CHAT LIST -->
+
+      </section> <!-- /CHAT LIST CONTAINER -->
+
+    </aside> <!-- /ASIDE LEFT -->
+
+    <!-- MAIN RIGHT -->
+    <main class="right">
+      <!-- RIGHT HEADER -->
+      <header>
+        <!-- contact info chat-->
+        <div class="contact-info">
+          <img src="img/avatar_1.jpg" :alt="user.name">
+          <div class="name-access">
+            <span class="contact-name">Michele</span>
+            <span class="last-access">Ultimo accesso oggi alle</span>
+          </div>
+        </div>  <!-- /contact info chat-->
+
+        <div class="chat-buttons">
+          <i class="fas fa-search"></i>
+          <i class="fas fa-paperclip"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+
+      </header> <!-- /RIGHT HEADER -->
+
+      <!-- CHAT MAIN SECTION -->
+      <section class="chat-main">
+
+        <div class="text sent">
+          <span>Hai portato a spasso il cane?</span>
+          <span class="text-info">10/01/2020 15:30:55</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="text sent">
+          <span>Ricordati di dargli da mangiare</span>
+          <span class="text-info">10/01/2020 15:50:00</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="text received">
+          <span>Tutto fatto!</span>
+          <span class="text-info">10/01/2020 16:15:22</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+
+      </section> <!-- /CHAT MAIN SECTION -->
+
+      <!-- RIGHT FOOTER -->
+      <footer>
+        <!-- CHAT CONSOLE -->
+        <div class="chat-console">
+          <i class="far fa-smile"></i>
+          <input type="text" placeholder="Scrivi un messaggio">
+          <i class="fas fa-microphone"></i>
+        </div> <!-- /CHAT CONSOLE -->
+
+      </footer> <!-- /RIGHT FOOTER -->
+
+    </main> <!-- /MAIN RIGHT -->
+
+  </div> <!-- /APP CONTAINER -->
+
+
+  <!-- SCRIPT -->
+  <script src="js/script.js"></script>
+</body>
+</html>

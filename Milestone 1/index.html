@@ -23,8 +23,8 @@
       <header>
         <!-- user info self -->
         <div class="user-info">
-          <img src="img/avatar_2.jpg" alt="">
-          <span class="contact-name">Nome Utente</span>
+          <img :src="'img/avatar' + user.avatar + '.jpg'" :alt="user.name">
+          <span class="contact-name">{{user.name}}</span>
         </div> <!-- user info self -->
 
         <div class="user-buttons">
@@ -64,7 +64,7 @@
             <li
               v-for="(contact, index) in contacts"
             >
-              <img :src="getSrc(index)" alt="Avatar">
+              <img :src="getSrc(index)" :alt="user.name">
               <span>{{contact.name}}</span>
             </li> <!-- /list element -->
           </ul>
@@ -81,7 +81,7 @@
       <header>
         <!-- contact info chat-->
         <div class="contact-info">
-          <img src="img/avatar_1.jpg" alt="">
+          <img src="img/avatar_1.jpg" :alt="user.name">
           <div class="name-access">
             <span class="contact-name">Michele</span>
             <span class="last-access">Ultimo accesso oggi alle</span>
