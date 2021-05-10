@@ -86,7 +86,7 @@
           v-for="(contact, index) in contacts"
           v-if="(contact.visible)"
         >
-          <img :src="'img/avatar' + contact.avatar + '.jpg'" :alt="contact.name">
+          <img :src="getSrc(index)" :alt="contact.name">
           <div class="name-access">
             <span class="contact-name">{{contact.name}}</span>
             <span class="last-access">Ultimo accesso oggi alle</span>
