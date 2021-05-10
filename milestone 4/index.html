@@ -70,7 +70,7 @@
               v-for="(contact, index) in contacts"
               @click="displayMessages(index)"
             >
-              <img :src="getSrc(index)" :alt="contact.name">
+              <img :src="'img/avatar' + contact.avatar + '.jpg'" :alt="contact.name">
               <div class="msg-info">
                 <span>{{contact.name}}</span>
                 <span class="last-msg">{{contact.messages[contact.messages.length - 1].text}}</span>
@@ -93,10 +93,10 @@
         <!-- contact info chat-->
         <div 
           class="contact-info"
-          v-for="(contact, index) in contacts"
+          v-for="(contact, index) in clonedContacts"
           v-if="(contact.visible)"
         >
-          <img :src="getSrc(index)" :alt="contact.name">
+          <img :src="'img/avatar' + contact.avatar + '.jpg'" :alt="contact.name">
           <div class="name-access">
             <span class="contact-name">{{contact.name}}</span>
             <span class="last-access">Ultimo accesso oggi alle {{contact.messages[contact.messages.length - 1].date}}</span>

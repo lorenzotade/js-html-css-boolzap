@@ -95,66 +95,73 @@ const app = new Vue({
 
     msgSent: '',
     search: '',
+    clonedContacts: []
   },
 
+  // nel mounted inizializzo il primo contatto
+  // della lista come visibile e clono la base dati
+  // in un nuovo array
   mounted() {
     this.contacts[0].visible = true;
+    this.clonedContacts = [...this.contacts];
   },
 
   methods: {
-    // funzione per costruire src dinamico
-    getSrc(index) {
-      return `img/avatar${this.contacts[index].avatar}.jpg`;
-    },
-
+    
+    // funzione che richiamata dal click sull'elemento lista
+    // setta tutti i visibile a false e solo quello cliccato a true
+    // in modo da visualizzare quello
     displayMessages(index) {
-      this.contacts.forEach((contact) => {
+      this.clonedContacts.forEach((contact) => {
         contact.visible = false
       });
       this.contacts[index].visible = true;
-    },
+    }, //end displayMessages
 
+    // se siamo nel contatto visualizzato, all'invio di
+    // un messaggio questo viene pushato nel suo array
+    // e quindi visualizzato a schermo. dopo un 
+    // secondo viene generata una risposta predefinita
     botMessage() {
       this.contacts.forEach((contact) => {
         if (contact.visible === true) {
-          contact.messages.push(
-            {
-              date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
-              text: this.msgSent,
-              status: 'sent'
-            }
-          );
-          this.msgSent = '';
-          setTimeout(() => {
+          if (this.msgSent.trim().length != 0) {
             contact.messages.push(
               {
                 date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
-                text: 'OK',
-                status: 'received'
+                text: this.msgSent,
+                status: 'sent'
               }
             );
-          }, 1000);
+            this.msgSent = '';
+            setTimeout(() => {
+              contact.messages.push(
+                {
+                  date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
+                  text: 'OK',
+                  status: 'received'
+                }
+              );
+            }, 1000);
+          } 
         }
       });
-    },
+    }, //end botMessage
 
+    // filtro l'array clone ogni volta che viene rilasciato un
+    // tasto qualsiasi dopo aver creato un v-bind. cerco il match 
+    // tra la stringa immessa e il nome del contatto. se avviene 
+    // quel contatto viene inserito nel nuovo array. Alla fine 
+    // la base dati viene sovrascritta dal nuovo array. Questa 
+    // funzione venendo chiamata ad ogni tasto reagisce anche al delete
+    // quindi a strigna vuota tutta la base dati originale viene mostrata
     searchUser(str) {
-      
-      let displayContacts = this.contacts.filter((contact) => {
+      let displayContacts = this.clonedContacts.filter((contact) => {
         return contact.name.toLowerCase().includes(str.toLowerCase());
       });
       this.contacts = displayContacts;
-    },
-
-    
-
-
-
-
-
-
-  }
-    
-
+    } //end searchUser
+      
+  } //end methods
 
 }); //end app
