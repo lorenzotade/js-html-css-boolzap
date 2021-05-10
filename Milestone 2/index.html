@@ -65,7 +65,7 @@
               v-for="(contact, index) in contacts"
               @click="displayMessages(index)"
             >
-              <img :src="getSrc(index)" :alt="user.name">
+              <img :src="getSrc(index)" :alt="contact.name">
               <span>{{contact.name}}</span>
             </li> <!-- /list element -->
           </ul>
