@@ -11,7 +11,7 @@ const app = new Vue({
       {
         name: 'Michele',
         avatar: '_1',
-        visible: false,
+        visible: true,
         messages: [
           {
             date: '10/01/2020 15:30:55',
@@ -33,7 +33,7 @@ const app = new Vue({
       {
         name: 'Fabio',
         avatar: '_2',
-        visible: false,
+        visible: true,
         messages: [
           {
             date: '20/03/2020 16:30:00',
@@ -55,7 +55,7 @@ const app = new Vue({
       {
         name: 'Samuele',
         avatar: '_3',
-        visible: false,
+        visible: true,
         messages: [
           {
             date: '28/03/2020 10:10:40',
@@ -77,7 +77,7 @@ const app = new Vue({
       {
         name: 'Luisa',
         avatar: '_4',
-        visible: false,
+        visible: true,
         messages: [
           {
             date: '10/01/2020 15:30:55',
@@ -93,59 +93,39 @@ const app = new Vue({
       },
     ],
 
+    contactActive: 0,
     msgSent: '',
-    search: '',
-    clonedContacts: []
-  },
-
-  // nel mounted inizializzo il primo contatto
-  // della lista come visibile e clono la base dati
-  // in un nuovo array
-  mounted() {
-    this.contacts[0].visible = true;
-    this.clonedContacts = [...this.contacts];
+    search: ''
   },
 
   methods: {
     
-    // funzione che richiamata dal click sull'elemento lista
-    // setta tutti i visibile a false e solo quello cliccato a true
-    // in modo da visualizzare quello
-    displayMessages(index) {
-      this.clonedContacts.forEach((contact) => {
-        contact.visible = false
-      });
-      this.contacts[index].visible = true;
-    }, //end displayMessages
-
     // se siamo nel contatto visualizzato, all'invio di
-    // un messaggio questo viene pushato nel suo array
-    // e quindi visualizzato a schermo. dopo un 
-    // secondo viene generata una risposta predefinita
+    // un messaggio (se non è una stringa vuota) questo 
+    // viene pushato nel suo array e quindi visualizzato 
+    // a schermo. dopo un secondo viene generata una risposta
     botMessage() {
-      this.contacts.forEach((contact) => {
-        if (contact.visible === true) {
-          if (this.msgSent.trim().length != 0) {
-            contact.messages.push(
-              {
-                date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
-                text: this.msgSent,
-                status: 'sent'
-              }
-            );
-            this.msgSent = '';
-            setTimeout(() => {
-              contact.messages.push(
-                {
-                  date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
-                  text: 'OK',
-                  status: 'received'
-                }
-              );
-            }, 1000);
-          } 
-        }
-      });
+      
+      if (this.msgSent.trim().length != 0) {
+        this.contacts[this.contactActive].messages.push(
+          {
+            date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
+            text: this.msgSent,
+            status: 'sent'
+          }
+        );
+        this.msgSent = '';
+        setTimeout(() => {
+          this.contacts[this.contactActive].messages.push(
+            {
+              date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
+              text: 'OK',
+              status: 'received'
+            }
+          );
+        }, 1000);
+      } 
+      
     }, //end botMessage
 
     // filtro l'array clone ogni volta che viene rilasciato un
@@ -156,12 +136,16 @@ const app = new Vue({
     // funzione venendo chiamata ad ogni tasto reagisce anche al delete
     // quindi a strigna vuota tutta la base dati originale viene mostrata
     searchUser(str) {
-      let displayContacts = this.clonedContacts.filter((contact) => {
-        return contact.name.toLowerCase().includes(str.toLowerCase());
-      });
-      this.contacts = displayContacts;
+      this.contacts.forEach((contact) => {
+        if (contact.name.toLowerCase().includes(str.toLowerCase())) {
+          contact.visible = true;
+        } else {
+          contact.visible = false; 
+        }
+      })
     } //end searchUser
       
   } //end methods
 
 }); //end app
+

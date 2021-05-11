@@ -68,9 +68,11 @@
             <!-- list element -->
             <li
               v-for="(contact, index) in contacts"
-              @click="displayMessages(index)"
+              @click="contactActive = index"
+              :class="{'active': contactActive === index}"
+              v-if="contact.visible"
             >
-              <img :src="'img/avatar' + contact.avatar + '.jpg'" :alt="contact.name">
+              <img :src="'img/avatar' + contact.avatar + '.jpg'" :alt="contacts[contactActive].name">
               <div class="msg-info">
                 <span>{{contact.name}}</span>
                 <span class="last-msg">{{contact.messages[contact.messages.length - 1].text}}</span>
@@ -91,15 +93,11 @@
       <!-- RIGHT HEADER -->
       <header>
         <!-- contact info chat-->
-        <div 
-          class="contact-info"
-          v-for="(contact, index) in clonedContacts"
-          v-if="(contact.visible)"
-        >
-          <img :src="'img/avatar' + contact.avatar + '.jpg'" :alt="contact.name">
+        <div class="contact-info">
+          <img :src="'img/avatar' + contacts[contactActive].avatar + '.jpg'" :alt="contacts[contactActive].name">
           <div class="name-access">
-            <span class="contact-name">{{contact.name}}</span>
-            <span class="last-access">Ultimo accesso oggi alle {{contact.messages[contact.messages.length - 1].date}}</span>
+            <span class="contact-name">{{contacts[contactActive].name}}</span>
+            <span class="last-access">Ultimo accesso oggi alle {{contacts[contactActive].messages[contacts[contactActive].messages.length - 1].date}}</span>
           </div>
         </div>  <!-- /contact info chat-->
 
@@ -114,11 +112,10 @@
       <!-- CHAT MAIN SECTION -->
       <section class="chat-main">
         <!-- text message -->
-        <template v-for="(contact, index) in contacts">
+        <template>
           <div 
             class="text"
-            v-if="contact.visible"
-            v-for="message in contact.messages"
+            v-for="message in contacts[contactActive].messages"
             :class="message.status"
           >
             <span>{{message.text}}</span>

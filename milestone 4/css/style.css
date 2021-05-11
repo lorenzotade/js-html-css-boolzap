@@ -127,6 +127,9 @@ body {
 .container .left .chat-list-container .chat-list ul li:hover {
   background-color: #F5F5F5;
 }
+.container .left .chat-list-container .chat-list ul li.active {
+  background-color: #F5F5F5;
+}
 .container .left .chat-list-container .chat-list ul li span {
   margin-left: 20px;
 }
