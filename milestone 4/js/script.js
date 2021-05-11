@@ -128,13 +128,11 @@ const app = new Vue({
       
     }, //end botMessage
 
-    // filtro l'array clone ogni volta che viene rilasciato un
-    // tasto qualsiasi dopo aver creato un v-bind. cerco il match 
-    // tra la stringa immessa e il nome del contatto. se avviene 
-    // quel contatto viene inserito nel nuovo array. Alla fine 
-    // la base dati viene sovrascritta dal nuovo array. Questa 
-    // funzione venendo chiamata ad ogni tasto reagisce anche al delete
-    // quindi a strigna vuota tutta la base dati originale viene mostrata
+    // ad ogni rilascio di tasto questa funzione viene chiamata
+    // Con un ciclo forEach scorro ogni contatto e se questo
+    // continene nel nome la stringa immessa nel campo di input
+    // la sua proprietà visible risulta true e viene mostrato a video
+    // nel caso contrario risulta false e scompare dalla lista
     searchUser(str) {
       this.contacts.forEach((contact) => {
         if (contact.name.toLowerCase().includes(str.toLowerCase())) {
