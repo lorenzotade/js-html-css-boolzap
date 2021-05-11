@@ -93,10 +93,25 @@ const app = new Vue({
       },
     ],
 
+    randomTexts: [
+      'OK', 
+      'Ciao, come stai?', 
+      'Ma che piacere sentirti!', 
+      'Chi sei?',
+      'Ue mitico!',
+      'Bella zio',
+      'Non scrivermi mai più',
+      'Ma smettila di rompermi i coglioni',
+      'Scrivimi un\'altra volta e chiamo i carabinieri',
+      'Dove sono i miei soldi?!'
+    ],
+
     contactActive: 0,
     msgSent: '',
     search: '',
-    consoleVisible: undefined
+    consoleVisible: undefined,
+    lastAccess: '',
+    now: dayjs().format('dddd MM MMMM YYYY HH:mm:ss'),
   },
 
   methods: {
@@ -105,6 +120,7 @@ const app = new Vue({
     // un messaggio (se non è una stringa vuota) questo 
     // viene pushato nel suo array e quindi visualizzato 
     // a schermo. dopo un secondo viene generata una risposta
+    // random dall'elenco randomTexts
     botMessage() {
       
       if (this.msgSent.trim().length != 0) {
@@ -120,7 +136,7 @@ const app = new Vue({
           this.contacts[this.contactActive].messages.push(
             {
               date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
-              text: 'OK',
+              text: `${this.randomTexts[Math.floor(Math.random() * (this.randomTexts.length - 1)) + 1]}`,
               status: 'received'
             }
           );
@@ -135,6 +151,7 @@ const app = new Vue({
     // la sua proprietà visible risulta true e viene mostrato a video
     // nel caso contrario risulta false e scompare dalla lista
     searchUser(str) {
+
       this.contacts.forEach((contact) => {
         if (contact.name.toLowerCase().includes(str.toLowerCase())) {
           contact.visible = true;
@@ -142,6 +159,7 @@ const app = new Vue({
           contact.visible = false; 
         }
       })
+
     }, //end searchUser
 
     // funzione che chiamata al click di Delete message, rileva 
@@ -149,17 +167,23 @@ const app = new Vue({
     // e lo rimuove all'array togliendolo effettivamenete
     // dalla conversazione
     deleteText(index) {
+
       this.contacts[this.contactActive].messages.splice(index, 1);
+
     }, //end deleteText
 
-    // al click sul bottone viene scatenata questa funzione
-    // dove viene chiesto con un prompt il nome utente e poi
+    // al rilascio del tasto enter viene scatenata questa funzione
+    // che prende la stringa inserita come nome utente e poi
     // pusha nella base dati contatti un nuovo oggetto contatto
     // con il nome scelto, avatar random e oggetto messaggio template
-    newChat() {
+    // vuoto. Poi azzera il campo di input, sposta il focus 
+    // sull'ultima chat creata e chiama la funzione search user 
+    // per ristampare a video la lista aggiornata
+    newChat(str) {
+      
       this.contacts.push(
         {
-          name: prompt('Inserisci un nuovo utente').trim(),
+          name: this.search,
           avatar: `_${Math.floor(Math.random() * 8) + 1}`,
           visible: true,
           messages: [
@@ -170,8 +194,24 @@ const app = new Vue({
             },
           ],
         },
-      )
-    }
+      );
+      this.search = '';
+      this.contactActive = this.contacts.length - 1;
+      this.searchUser(this.search);
+      
+    }, //end newChat
+
+
+    /* calc time non venuto ci do a mucchio */
+    calcTime() {
+
+      let lastMessageDate = this.contacts[this.contactActive].messages[this.contacts[this.contactActive].messages.length - 1].date
+      
+      let diff = this.now.diff(lastMessageDate, 'd')
+      console.log(now)
+      console.log(diff)
+      
+    } //end calcTime
 
       
   } //end methods
