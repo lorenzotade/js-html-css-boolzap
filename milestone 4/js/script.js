@@ -95,7 +95,8 @@ const app = new Vue({
 
     contactActive: 0,
     msgSent: '',
-    search: ''
+    search: '',
+    consoleVisible: undefined
   },
 
   methods: {
@@ -141,7 +142,11 @@ const app = new Vue({
           contact.visible = false; 
         }
       })
-    } //end searchUser
+    }, //end searchUser
+
+    deleteText(index) {
+      this.contacts[this.contactActive].messages.splice(index, 1);
+    }
       
   } //end methods
 

@@ -115,12 +115,22 @@
         <template>
           <div 
             class="text"
-            v-for="message in contacts[contactActive].messages"
+            v-for="(message, index) in contacts[contactActive].messages"
             :class="message.status"
           >
             <span>{{message.text}}</span>
             <span class="text-info">{{message.date}}</span>
-            <i class="fas fa-chevron-down"></i>
+            <i 
+              @click="(consoleVisible === contacts[contactActive].messages[index]) ? consoleVisible = undefined : consoleVisible = contacts[contactActive].messages[index]" 
+              class="fas fa-chevron-down"
+            ></i>
+            <div 
+              class="text-console" 
+              :class="{'active': consoleVisible === contacts[contactActive].messages[index]}"
+            >
+              <span>Message info</span>
+              <span @click="deleteText(index)">Delete message</span>
+            </div>
           </div>
         </template> <!-- /text message -->
 
