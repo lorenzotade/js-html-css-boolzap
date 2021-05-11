@@ -144,9 +144,35 @@ const app = new Vue({
       })
     }, //end searchUser
 
+    // funzione che chiamata al click di Delete message, rileva 
+    // l'indice di quale messaggio ha scatenato l'evento
+    // e lo rimuove all'array togliendolo effettivamenete
+    // dalla conversazione
     deleteText(index) {
       this.contacts[this.contactActive].messages.splice(index, 1);
+    }, //end deleteText
+
+    // al click sul bottone viene scatenata questa funzione
+    // dove viene chiesto con un prompt il nome utente e poi
+    // pusha nella base dati contatti un nuovo oggetto contatto
+    // con il nome scelto, avatar random e oggetto messaggio template
+    newChat() {
+      this.contacts.push(
+        {
+          name: prompt('Inserisci un nuovo utente').trim(),
+          avatar: `_${Math.floor(Math.random() * 8) + 1}`,
+          visible: true,
+          messages: [
+            {
+              date: '',
+              text: '',
+              status: ''
+            },
+          ],
+        },
+      )
     }
+
       
   } //end methods
 
