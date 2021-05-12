@@ -110,7 +110,6 @@ const app = new Vue({
     msgSent: '',
     search: '',
     consoleVisible: undefined,
-    lastAccess: '',
     now: dayjs().format('dddd MM MMMM YYYY HH:mm:ss'),
   },
 
@@ -144,6 +143,25 @@ const app = new Vue({
       } 
       
     }, //end botMessage
+
+    // funzione che prende l'indice e ritorna la data 
+    // dell'ultimo messaggio di quel contatto
+    lastAccess(index) {
+      let contactMsgs = this.contacts[index].messages;
+      return contactMsgs[contactMsgs.length - 1].date
+    },
+
+    // funzione che prende l'indice e ritorna il testo 
+    // dell'ultimo messaggio di quel contatto. Intero se
+    // più corto di 30 caratteri, troncato + ... se più lungo
+    lastMessage(index) {
+      let contactMsgs = this.contacts[index].messages;
+      if (contactMsgs[contactMsgs.length - 1].text.length > 30) {
+        let sliceTxt = contactMsgs[contactMsgs.length - 1].text.slice(0,30);
+        return sliceTxt + '...'
+      }
+      return contactMsgs[contactMsgs.length - 1].text
+    },
 
     // ad ogni rilascio di tasto questa funzione viene chiamata
     // Con un ciclo forEach scorro ogni contatto e se questo

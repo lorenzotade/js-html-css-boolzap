@@ -217,6 +217,7 @@ body {
   margin-bottom: 10px;
   border-radius: 10px;
   font-size: 14px;
+  word-wrap: break-word;
 }
 .container .right .chat-main .text .text-info {
   font-size: 10px;
