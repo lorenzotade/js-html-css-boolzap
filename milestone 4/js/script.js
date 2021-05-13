@@ -183,10 +183,22 @@ const app = new Vue({
     // funzione che chiamata al click di Delete message, rileva 
     // l'indice di quale messaggio ha scatenato l'evento
     // e lo rimuove all'array togliendolo effettivamenete
-    // dalla conversazione
+    // dalla conversazione. All'eliminazione dell'ultimo messaggio
+    // la proprietà messagges risulta un array comprendente un 
+    // solo oggetto messaggio vuoto. Niente stampa a video.
     deleteText(index) {
 
       this.contacts[this.contactActive].messages.splice(index, 1);
+
+      if (this.contacts[this.contactActive].messages.length === 0) {
+        this.contacts[this.contactActive].messages = [
+          {
+            date: '',
+            text: '',
+            status: ''
+          },
+        ]
+      }
 
     }, //end deleteText
 
@@ -218,19 +230,6 @@ const app = new Vue({
       this.searchUser(this.search);
       
     }, //end newChat
-
-
-    /* calc time non venuto ci do a mucchio */
-    calcTime() {
-
-      let lastMessageDate = this.contacts[this.contactActive].messages[this.contacts[this.contactActive].messages.length - 1].date
-      
-      let diff = this.now.diff(lastMessageDate, 'd')
-      console.log(now)
-      console.log(diff)
-      
-    } //end calcTime
-
       
   } //end methods
 
