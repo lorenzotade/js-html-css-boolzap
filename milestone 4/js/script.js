@@ -110,7 +110,6 @@ const app = new Vue({
     msgSent: '',
     search: '',
     consoleVisible: undefined,
-    now: dayjs().format('dddd MM MMMM YYYY HH:mm:ss'),
   },
 
   methods: {
